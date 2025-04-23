@@ -18,6 +18,10 @@ function disp(id) {
 	document.getElementById(id+'m').style.backgroundColor = '#1d5e97';
 }
 
+function parse(input) {
+  return parser.parse(input);
+}
+
 function show(id) {
 	var el = document.getElementById(id);
 	var sel = el.options[el.selectedIndex].value;

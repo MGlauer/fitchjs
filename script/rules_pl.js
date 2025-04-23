@@ -322,7 +322,7 @@ function ckNE(l,n) {
 	if(l.lin.length!=1) {
 		throw flag+'Rule must be applied to one line.';
 	}
-	if(!(PROOF[l.lin[0]-1].frm.length>2) || PROOF[l.lin[0]-1].frm.substr(0,2)!='¬¬' || l.frm!=PROOF[l.lin[0]-1].frm.substring(2)) {
+	if(!(PROOF[l.lin[0]-1].frm.length>2) || !(PROOF[l.lin[0]-1].frm.substr(0,2)!='¬¬' || PROOF[l.lin[0]-1].frm.substr(0,2)!='~~') || l.frm!=PROOF[l.lin[0]-1].frm.substring(2)) {
 		throw flag+'Formula on line '+l.lin[0]+' must be the double negation of the formula being derived.';
 	}
 	x = areAvl(l.lin,l.avl);

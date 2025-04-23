@@ -82,7 +82,7 @@ function ckAE(l,n) {
 	if(l.lin.length!=1) {
 		throw flag+'There is a problem with line citation. The rule must be applied to one line.';
 	}
-	if(PROOF[l.lin[0]-1].tr.length!=2 || !isQ(PROOF[l.lin[0]-1].tr[0]) || PROOF[l.lin[0]-1].tr[0][1]!='∀') {
+	if(PROOF[l.lin[0]-1].tr.length!=2 || !isQ(PROOF[l.lin[0]-1].tr[0])) {
 		throw flag+'The formula the rule is being applied to is not universally quantified.';
 	}
 	var iv = isInst(PROOF[l.lin[0]-1].tr,l.frm);

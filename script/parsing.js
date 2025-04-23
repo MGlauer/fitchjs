@@ -17,45 +17,16 @@ V :: = 'w' | 'x' | 'y' | 'z'
 // Takes a parse tree (as output by the parse function below) and returns the
 // string it is a parse tree of.
 function unparse(ar) {
-	if(ar.length==2 && (isQ(ar[0]) || isU(ar[0]))) {
+	if (ar.length == 2 && (isQ(ar[0]) || isU(ar[0]))) {
 		return ar[0] + unparse(ar[1]);
 	}
-	if(ar.length==3 && isB(ar[1])) {
-		return '('+unparse(ar[0])+ar[1]+unparse(ar[2])+')';
+	else if (ar.length == 3 && isB(ar[1])) {
+		return '(' + unparse(ar[0]) + ar[1] + unparse(ar[2]) + ')';
 	}
-	else {
-		return ar.join('');
+	else if (ar.length > 1) {
+		return ar[0] + "(" + ar.slice(1).join(',') + ")";
 	}
-}
-
-// String -> Tree
-// Takes a string and if it's a wff, returns a parse tree of the string, otherwise
-// returns an empty array.
-function parse(s) {
-	if(s=='') {return [];}
-	var s1 = [];
-	var s2 = [];
-	if(isQ(s)) {
-		s1 = parse(s.substring(2));
-		return s1.length ? [s.substring(0,2),s1] : [];
-	}
-	if(isU(s[0])) {
-		s1 = parse(s.substring(1));
-		return s1.length ? [s[0],s1] : [];
-	}
-	if(s[0] =='(' && s[s.length-1]==')') {
-		var a = gSub(s);
-		if(a.indexOf(undefined)>=0 || a.indexOf('')>=0) {
-			return [];
-		} else {
-			s1 = parse(a[0]);
-			s2 = parse(a[2]);
-			if(s1.length && s2.length) {
-				return [s1,a[1],s2];
-			} else {return [];}
-		}
-	}
-	else {return isA(s) ? s.split('') : []}
+	else return ar[0];
 }
 
 // String -> Bool

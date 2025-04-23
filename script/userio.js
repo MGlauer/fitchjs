@@ -18,7 +18,7 @@ NOTE 3.2.18: internally, the program uses the terminology of "SI/TI" rules ("Seq
 
 function Line(cnt,frm,tr,rul,seq,lin,sig,dth,avl,frv) {
 	this.cnt = cnt; // holds line count as int
-	this.frm = frm; // holds formula as string
+	this.frm = unparse(parse(frm)); // holds formula as string
 	this.tr = tr; // holds a parse tree of the formula
 	this.rul = rul; // holds the rule as string
 	this.seq = seq; // holds sequents in case of an SI rule
@@ -39,10 +39,34 @@ var GOALS = []; // array to hold goal formulas
 // FUNCTIONS FOR THE USER INTERFACE
 //=================================
 
+function split_premises(premises) {
+	let par_depth = 0;
+	let batch = '';
+	let results = [];
+	for (let i = 0; i < premises.length; i++) {
+		let cur = premises[i];
+		if (cur == ',' & par_depth == 0) {
+			results.push(batch);
+			batch = ''
+		} else {
+			batch += cur;
+			if (cur == '(') {
+				par_depth++;
+			} else if (cur == ')') {
+				par_depth--;
+			}
+		}
+	}
+	if (batch) {
+		results.push(batch);
+	}
+	return results
+}
+
 // Sets up the proof with user entered premises and conclusion
 function setup_proof() {
 	var premises = document.getElementById('premises').value.replace(/ /g,'');
-	premises = premises=='' ? [] : premises.split(',');
+	premises = premises=='' ? [] : split_premises(premises);
 	var conclusion = document.getElementById('conclusion').value.replace(/ /g,'');
 	errmess([1],''); // clear error console
 
