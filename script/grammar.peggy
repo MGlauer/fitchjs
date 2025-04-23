@@ -1,19 +1,36 @@
 {
     input = input.replaceAll(" ", "");
+	function flatten(sen, more){
+    	let op = undefined;
+        if(more.length == 0) return sen;
+        let res = [sen];
+        for(let i=0; i<more.length; i+=1){
+       		if(!op){op = more[i][0];};
+        	if(op != more[i][0]){
+            	throw "Different operators on same level";
+            }
+            res.push(more[i][0],more[i][1])
+        }
+        return res
+    }
 }
 
 start
   = Sen
 
 Sen
-  = "(" s:Sen ")" { return s; }
-  / n:neg s:Sen {return [n, s];}
-  / q:quant v:var s:Sen { return [q+v, s]; }
-  / left:Atom op:binop right:Sen { return [left, op, right]; }
-  / Atom
+  = q:quant v:var s:PSen { return [q+v, s]; }
+  / left:PSen more:((binop PSen)*) { return flatten(left, more); }
 
+PSen
+ = n:neg s:PSen {return [n, s];}
+ / "(" left:Sen ")" {return left;}
+ / Atom
+ 
 Atom
-  = pred:predicateSym "(" terms:Term|1..,","|  ")"  { return [pred, ...terms]; }
+  = pred:predicateSym par:("(" terms:Term|1..,","|  ")")?  { if(!par) return pred; return [pred, ...terms]; }
+  / '#' 
+  / '\u22A5' {return "#"}
 
 Term
 	= fun:functionSym "(" terms:Term|1..,","| ")"  { return [fun, ...terms]; }
@@ -21,7 +38,7 @@ Term
     / var
 
 predicateSym
-  = $([A-Z][A-z]*)
+  = $([A-uw-z][A-uw-z]*)
   
 functionSym
   = $([a-z]+)
