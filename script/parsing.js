@@ -78,7 +78,7 @@ function isQ(s) {
 function isU(s) {
 	var u = ['~','\u00AC'];
 	for(var i=0;i<u.length;i++) {
-		if(s.indexOf(u[i])==0) {return true;}
+		if(s[0]==u[i]) {return true;}
 	}
 	return false;
 }
@@ -187,9 +187,9 @@ function gRul(s) {
 // switches between 'plain' symbols and unicode, both directions
 function ptou(s) {
 	switch(s) {
-		//case '~': return '\u00AC';
+		case '~': return '\u00AC';
 		//case '\u00AC' : return '~';
-		//case '&' : return '\u2227';
+		case '&' : return '\u2227';
 		//case '\u2227' : return '&';
 		case 'v' : return '\u2228';
 		//case '\u2228' : return 'v';

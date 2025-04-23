@@ -132,7 +132,7 @@ function ckCNI(l,n) {
 		throw flag+'The second rule line must be the last line of the subproof beginning with the assumption line '+sa+".";
 	}
 	
-	if(l.tr.length!=3 || l.tr[1]!='→') {
+	if(l.tr.length!=3 || l.tr[1]!='>') {
 		throw flag+'The formula being derived must be a conditional.';
 	}
 	if(PROOF[sa-1].frm!=unparse(l.tr[0])) {
@@ -157,7 +157,7 @@ function ckCNE(l,n) {
 	if(l.lin.length!=2) {
 		throw flag+'Rule must be applied to two lines.';
 	}
-	if(PROOF[l.lin[0]-1].tr.length!=3 || PROOF[l.lin[0]-1].tr[1]!='→') {
+	if(PROOF[l.lin[0]-1].tr.length!=3 || PROOF[l.lin[0]-1].tr[1]!='>') {
 		throw flag+'The first rule line must be a conditional. (Remember: cite the line of the conditional first, the line of its antecedent second.)'
 	}
 	if(PROOF[l.lin[1]-1].frm!=unparse(PROOF[l.lin[0]-1].tr[0])) {
@@ -282,7 +282,7 @@ function ckNI(l,n) {
 	if(PROOF[sc-1].frm!='#') {
 		throw flag+'The second rule line must be the absurdity.';
 	}	 
-	if(l.frm!=('¬'+PROOF[sa-1].frm)) {
+	if(l.frm!=('~'+PROOF[sa-1].frm)) {
 		throw flag+'The formula being derived must be the negation of the assumption on the first rule line.';
 	}
 	
@@ -357,7 +357,7 @@ function ckBCI(l,n) {
 		throw flag+'Rule must be applied to two subproofs (citations of the form "j-k").';
 	}
 	
-	if(l.tr.length!=3 || l.tr[1]!='↔') {
+	if(l.tr.length!=3 || l.tr[1]!='<>') {
 		throw flag+'The formula being derived must be a biconditional.';
 	}
 	
@@ -390,7 +390,7 @@ function ckBCI(l,n) {
 	if(PROOF[sa1-1].frm!=PROOF[sc2-1].frm || PROOF[sc1-1].frm!=PROOF[sa2-1].frm) {
 		throw flag+'The formula on the first rule line must match the one on the fourth, and the one on the second must match the one on the third.';
 	}
-	if((l.frm!='('+PROOF[sa1-1].frm+'↔'+PROOF[sc1-1].frm+')') && (l.frm!='('+PROOF[sc1-1].frm+'↔'+PROOF[sa1-1].frm+')')) {
+	if((l.frm!='('+PROOF[sa1-1].frm+'<>'+PROOF[sc1-1].frm+')') && (l.frm!='('+PROOF[sc1-1].frm+'<>'+PROOF[sa1-1].frm+')')) {
 		throw flag+'The biconditional being derived must be composed of the formulas on the rule lines.';
 	}
 	
@@ -415,7 +415,7 @@ function ckBCE(l,n) {
 	if(PROOF[l.lin[0]-1].tr.length!=3 || PROOF[l.lin[0]-1].tr[1]!='↔') {
 		throw flag+'The formula on the first rule line must be a biconditional.';
 	}
-	if('('+PROOF[l.lin[1]-1].frm+'↔'+l.frm+')'!=PROOF[l.lin[0]-1].frm && '('+l.frm+'↔'+PROOF[l.lin[1]-1].frm+')'!=PROOF[l.lin[0]-1].frm) {
+	if('('+PROOF[l.lin[1]-1].frm+'<>'+l.frm+')'!=PROOF[l.lin[0]-1].frm && '('+l.frm+'<>'+PROOF[l.lin[1]-1].frm+')'!=PROOF[l.lin[0]-1].frm) {
 		throw flag+'The formula being derived must be one side of the biconditional on the first rule line, and the formula on the second rule line the other side of it.';	
 	}
 
