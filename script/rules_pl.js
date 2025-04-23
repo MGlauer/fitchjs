@@ -76,10 +76,10 @@ function ckCJI(l,n) {
 	if(l.lin.length!=2) {
 		throw flag+'Rule must be applied to two lines.';
 	}
-	if(l.tr.length!=3 || l.tr[1]!='∧') {
+	if(l.tr.length!=3 || l.tr[1]!='&') {
 		throw flag+'The formula being derived must be a conjunction.';
 	}
-	if(!(l.frm=='('+PROOF[l.lin[0]-1].frm+'∧'+PROOF[l.lin[1]-1].frm+')') && !(l.frm=='('+PROOF[l.lin[1]-1].frm+'∧'+PROOF[l.lin[0]-1].frm+')')) {
+	if(!(l.frm=='('+PROOF[l.lin[0]-1].frm+'&'+PROOF[l.lin[1]-1].frm+')') && !(l.frm=='('+PROOF[l.lin[1]-1].frm+'&'+PROOF[l.lin[0]-1].frm+')')) {
 		throw flag+'The formulas on lines '+l.lin[0]+' and '+l.lin[1]+' must be the conjuncts of the formula being derived.';
 	}
 	var x = areAvl(l.lin,l.avl);

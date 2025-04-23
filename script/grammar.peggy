@@ -9,9 +9,13 @@
         	if(op != more[i][0]){
             	throw "Different operators on same level";
             }
-            res.push(more[i][0],more[i][1])
+            res.push(more[i][1])
         }
-        return res
+        let r = res[res.length-1]
+        for(let i=res.length-2; i>=0; i--){
+        	r = [res[i], op, r]
+        }
+        return r
     }
 }
 
